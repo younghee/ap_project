@@ -251,7 +251,7 @@ DEPENDENCIES
   devise-two-factor
   dotenv-rails
   jbuilder (~> 2.7)
-  letter_opener (~> 1.4, >= 1.4.1)
+  letter_opener
   listen (~> 3.3)
   mysql2 (~> 0.5)
   puma (~> 5.0)

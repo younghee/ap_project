@@ -9,6 +9,16 @@ class TwoFactorsController < ApplicationController
       end
       current_user.generate_two_factor_secret_if_missing!
     end
+
+    def email
+      if current_user.otp_required_for_login
+        flash[:alert] = 'Two Factor Authentication is already enabled.'
+        return redirect_to edit_user_registration_path
+      end
+      current_user.generate_two_factor_secret_if_missing!
+      #@otp= current_otp
+      #TwoFactorNotificationMailer.create_notification(email, current_otp).deliver_now
+    end
   
     def create
       unless current_user.valid_password?(enable_2fa_params[:password])
