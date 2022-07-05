@@ -39,6 +39,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'letter_opener'
   #gem 'letter_opener_web', '~> 2.0'
+  gem 'rspec-rails' 
+  gem 'database_cleaner'
 end
 
 group :development do

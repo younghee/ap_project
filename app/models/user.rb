@@ -15,15 +15,21 @@ class User < ApplicationRecord
         def generate_two_factor_secret_if_missing!
           return unless otp_secret.nil?
           update!(otp_secret: User.generate_otp_secret)
-          current_otp
-          TwoFactorNotificationMailer.create_notification(email, current_otp).deliver_now
         end
 
         # Ensure that the user is prompted for their OTP when they login
         def enable_two_factor!
           update!(otp_required_for_login: true)
+          NotificationMailer.create_notification(email, current_otp).deliver_now
         end
 
+        # def enable_two_factor_email!(user)
+        #   user.update!(otp_required_for_login: true)
+        #   user.otp_secret=user.generate_otp_secret
+        #   user.otp_code
+        #   user.save!
+        #   NotificationMailer.create_notification(email, opt_code).deliver_now
+        # end
         # Disable the use of OTP-based two-factor.
         def disable_two_factor!
           update!(

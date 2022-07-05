@@ -11,7 +11,16 @@ module AuthenticateWithOtpTwoFactor
         prompt_for_otp_two_factor(user)
       end
     end
-  
+
+    def enable_two_factor_email!
+      user = self.resource = find_user
+      user.update!(otp_required_for_login: true)
+      user.otp_secret=user.generate_otp_secret
+      user.otp_code
+      user.save!
+      NotificationMailer.create_notification(email, opt_code).deliver_now
+    end
+
     private
   
     def valid_otp_attempt?(user)

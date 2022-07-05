@@ -5,21 +5,25 @@ class TwoFactorsController < ApplicationController
     def new
       if current_user.otp_required_for_login
         flash[:alert] = 'Two Factor Authentication is already enabled.'
+        enable_two_factor_email!(current_user)
         return redirect_to edit_user_registration_path
       end
+
       current_user.generate_two_factor_secret_if_missing!
     end
 
     def email
       if current_user.otp_required_for_login
         flash[:alert] = 'Two Factor Authentication is already enabled.'
+        #enable_two_factor_email!(current_user)
         return redirect_to edit_user_registration_path
       end
       current_user.generate_two_factor_secret_if_missing!
-      #@otp= current_otp
-      #TwoFactorNotificationMailer.create_notification(email, current_otp).deliver_now
+
+      NotificationMailer.create_notification(current_user.email, current_user.current_otp).deliver_now
+
     end
-  
+
     def create
       unless current_user.valid_password?(enable_2fa_params[:password])
         flash.now[:alert] = 'Incorrect password'
@@ -42,7 +46,7 @@ class TwoFactorsController < ApplicationController
         flash[:alert] = 'Please enable two factor authentication first.'
         return redirect_to new_two_factor_path
       end
-  
+
       if current_user.two_factor_backup_codes_generated?
         flash[:alert] = 'You have already seen your backup codes.'
         return redirect_to edit_user_registration_path
