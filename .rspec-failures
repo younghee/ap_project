@@ -1,0 +1,9 @@
+example_id                                                                   | status | run_time        |
+---------------------------------------------------------------------------- | ------ | --------------- |
+./spec/features/account_settings/user_can_view_account_settings_spec.rb[1:1] | passed | 0.16063 seconds |
+./spec/features/account_settings/user_can_view_account_settings_spec.rb[1:2] | passed | 0.02645 seconds |
+./spec/features/login/user_can_login_spec.rb[1:1]                            | passed | 0.05368 seconds |
+./spec/features/login/user_can_login_with_otp_spec.rb[1:1]                   | failed | 0.06802 seconds |
+./spec/features/login/user_can_login_with_otp_spec.rb[1:2]                   | failed | 0.04445 seconds |
+./spec/features/static_spec.rb[1:1:1]                                        | passed | 0.01301 seconds |
+./spec/models/user_spec.rb[1:1:1]                                            | passed | 0.00399 seconds |
